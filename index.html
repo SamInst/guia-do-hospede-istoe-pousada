@@ -2,789 +2,490 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Isto É Pousada — Guia do Hóspede</title>
+  <meta name="description" content="Guia do hóspede da Isto É Pousada, em Viana, Maranhão: Wi-Fi, gastronomia, produtos, regras e recepção." />
+  <meta name="theme-color" content="#F4EDDF" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#14100B" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23B56A23'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-style='italic' font-size='54' fill='%23fff' text-anchor='middle'%3EIÉ%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script type="module" src="/src/main.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #faf8f4;
-      --gold: #b8955a;
-      --gold-light: #d4b07a;
-      --gold-bg: rgba(184,149,90,.08);
-      --gold-border: rgba(184,149,90,.25);
-      --dark: #1a1612;
-      --brown: #4a3f35;
-      --muted: #8a7c70;
-      --border: #ddd5c8;
-      --card: #ffffff;
-      --surface: #f7f3ee;
-      --green: #25d366;
-      --green-dk: #1ebe5d;
-      --success: #27855a;
-    }
-
-    body {
-      font-family: 'DM Sans', 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--dark);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Screens ── */
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    /* ══════════════════════════════
-       HOME SCREEN
-    ══════════════════════════════ */
-    .home-header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 28px 20px 24px;
-      text-align: center;
-    }
-    .home-emblem {
-      width: 64px; height: 64px; border-radius: 18px;
-      background: linear-gradient(135deg, #b8955a, #d4b07a);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 30px; margin: 0 auto 14px;
-      box-shadow: 0 6px 20px rgba(184,149,90,.32);
-    }
-    .home-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 26px; font-weight: 700; color: var(--dark);
-      letter-spacing: -.4px; line-height: 1.15;
-    }
-    .home-sub {
-      font-size: 13px; color: var(--muted); margin-top: 4px;
-    }
-    .home-welcome {
-      display: inline-block;
-      margin-top: 14px;
-      background: var(--gold-bg);
-      border: 1px solid var(--gold-border);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 12px; font-weight: 500; color: var(--brown);
-    }
-
-    .home-body {
-      max-width: 560px; margin: 0 auto;
-      padding: 20px 16px 60px;
-    }
-
-    .home-section-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--muted);
-      margin: 20px 0 10px 4px;
-    }
-    .home-section-label:first-child { margin-top: 0; }
-
-    .menu-card {
-      display: flex; align-items: center; gap: 14px;
-      width: 100%; text-align: left;
-      padding: 15px 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(26,22,18,.05);
-      cursor: pointer; font-family: inherit;
-      transition: box-shadow .2s, transform .15s, border-color .2s;
-      margin-bottom: 10px;
-    }
-    .menu-card:hover {
-      box-shadow: 0 5px 22px rgba(26,22,18,.11);
-      transform: translateY(-1px);
-      border-color: var(--gold-border);
-    }
-    .menu-card:active { transform: scale(.98); }
-
-    .mc-icon {
-      width: 48px; height: 48px; border-radius: 13px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; flex-shrink: 0;
-    }
-    .mc-icon.green  { background: rgba(37,211,102,.10); }
-    .mc-icon.gold   { background: var(--gold-bg); }
-    .mc-icon.blue   { background: rgba(59,130,246,.09); }
-    .mc-icon.purple { background: rgba(139,92,246,.09); }
-    .mc-icon.orange { background: rgba(249,115,22,.09); }
-    .mc-icon.teal   { background: rgba(20,184,166,.09); }
-
-    .mc-text { flex: 1; min-width: 0; }
-    .mc-title {
-      font-size: 15px; font-weight: 600; color: var(--dark);
-      line-height: 1.2;
-    }
-    .mc-sub {
-      font-size: 12px; color: var(--muted); margin-top: 3px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .mc-arrow {
-      color: var(--border); font-size: 18px; flex-shrink: 0;
-      transition: color .2s, transform .2s;
-    }
-    .menu-card:hover .mc-arrow { color: var(--gold); transform: translateX(2px); }
-
-    /* ══════════════════════════════
-       DETAIL SCREEN
-    ══════════════════════════════ */
-    .detail-topbar {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(250,248,244,.96);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 16px;
-      max-width: 560px; margin: 0 auto;
-    }
-    .back-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--surface); border: 1px solid var(--border);
-      cursor: pointer; font-size: 18px; flex-shrink: 0;
-      transition: background .15s;
-      font-family: inherit;
-    }
-    .back-btn:hover { background: var(--border); }
-    .detail-topbar-title {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 17px; font-weight: 700; color: var(--dark);
-      letter-spacing: -.2px;
-    }
-
-    .detail-body {
-      max-width: 560px; margin: 0 auto;
-      padding: 20px 16px 80px;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(16px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    .screen.active .detail-body { animation: slideIn .25s ease; }
-
-    /* ── Info banner ── */
-    .info-banner {
-      display: flex; gap: 9px; align-items: flex-start;
-      background: var(--gold-bg); border: 1px solid var(--gold-border);
-      border-radius: 12px; padding: 13px 15px;
-      font-size: 13px; color: var(--brown); line-height: 1.5;
-      margin-bottom: 20px;
-    }
-    .info-banner .ib-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-    /* ── Section title ── */
-    .sec-title {
-      display: flex; align-items: center; gap: 7px;
-      font-size: 10px; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--gold);
-      margin: 22px 0 10px;
-    }
-    .sec-title:first-child { margin-top: 0; }
-    .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-    /* ── Restaurant list ── */
-    .rest-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
-    .rest-card {
-      display: flex; align-items: center; gap: 12px;
-      padding: 13px 14px; background: var(--card);
-      border: 1px solid var(--border); border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(26,22,18,.05);
-      transition: box-shadow .2s, transform .2s;
-    }
-    .rest-card:hover { box-shadow: 0 4px 20px rgba(26,22,18,.09); transform: translateY(-1px); }
-    .rest-icon {
-      width: 40px; height: 40px; border-radius: 9px;
-      background: var(--gold-bg); display: flex; align-items: center;
-      justify-content: center; font-size: 19px; flex-shrink: 0;
-    }
-    .rest-info { flex: 1; min-width: 0; }
-    .rest-name { font-weight: 600; font-size: 14px; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rest-phone { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .wa-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 8px 12px; background: var(--green); color: #fff;
-      border-radius: 8px; font-size: 12px; font-weight: 600;
-      font-family: inherit; text-decoration: none; white-space: nowrap;
-      flex-shrink: 0; transition: background .15s, transform .1s;
-    }
-    .wa-btn:hover { background: var(--green-dk); transform: scale(1.03); }
-    .wa-btn svg { width: 13px; height: 13px; }
-
-    /* ── Wi-Fi ── */
-    .wifi-group {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; box-shadow: 0 3px 18px rgba(26,22,18,.06);
-      overflow: hidden; margin-bottom: 14px;
-    }
-    .wifi-head {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 18px; background: var(--gold-bg);
-      border-bottom: 1px solid var(--border);
-    }
-    .wifi-head h3 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 15px; font-weight: 700; color: var(--dark);
-    }
-    .wifi-body { padding: 14px 18px; }
-    .wifi-lbl { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .net-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .net-tag {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 11px; background: var(--surface);
-      border: 1px solid var(--border); border-radius: 20px;
-      font-size: 12px; font-weight: 600; color: var(--brown);
-    }
-    .pwd-row {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 11px 13px;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    }
-    .pwd-lbl { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
-    .pwd-val { font-size: 16px; font-weight: 700; color: var(--dark); letter-spacing: .04em; }
-    .copy-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 7px 13px; background: var(--gold); color: #fff;
-      border: none; border-radius: 8px; font-size: 12px; font-weight: 600;
-      font-family: inherit; cursor: pointer; flex-shrink: 0; transition: background .15s;
-    }
-    .copy-btn:hover { background: var(--gold-light); }
-    .copy-btn.copied { background: var(--success); }
-
-    /* ── Rules ── */
-    .rule-block {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; box-shadow: 0 2px 12px rgba(26,22,18,.05);
-      margin-bottom: 12px; overflow: hidden;
-    }
-    .rule-head {
-      display: flex; align-items: center; gap: 9px;
-      padding: 12px 16px; background: var(--gold-bg);
-      border-bottom: 1px solid var(--border);
-      font-size: 13px; font-weight: 700; color: var(--brown);
-    }
-    .rule-body { padding: 12px 16px; display: flex; flex-direction: column; gap: 9px; }
-    .rule-item {
-      position: relative; padding-left: 14px;
-      font-size: 13px; color: var(--brown); line-height: 1.6;
-    }
-    .rule-item::before { content: '•'; color: var(--gold); font-weight: 700; position: absolute; left: 0; top: 0; }
-    .rule-item strong { color: var(--dark); }
-
-    .fine-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 4px 0 2px; }
-    .fine-tbl tr { border-bottom: 1px solid var(--border); }
-    .fine-tbl tr:last-child { border-bottom: none; }
-    .fine-tbl td { padding: 7px 4px; color: var(--brown); }
-    .fine-tbl td:last-child { text-align: right; font-weight: 700; color: var(--dark); }
-
-    /* ── Reception ── */
-    .rec-hero {
-      text-align: center; padding: 32px 20px 26px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 20px; box-shadow: 0 4px 40px rgba(26,22,18,.10); margin-bottom: 16px;
-    }
-    .rec-emblem {
-      width: 76px; height: 76px; border-radius: 50%;
-      background: linear-gradient(135deg, #b8955a, #d4b07a);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 34px; margin: 0 auto 16px;
-      box-shadow: 0 8px 26px rgba(184,149,90,.32);
-    }
-    .rec-hero h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 6px; letter-spacing: -.3px; }
-    .rec-hero p { font-size: 14px; color: var(--muted); line-height: 1.5; max-width: 260px; margin: 0 auto 24px; }
-    .rec-wa {
-      display: inline-flex; align-items: center; gap: 9px;
-      padding: 14px 28px; background: var(--green); color: #fff;
-      border-radius: 12px; font-size: 15px; font-weight: 600;
-      font-family: inherit; text-decoration: none;
-      box-shadow: 0 4px 16px rgba(37,211,102,.3);
-      transition: background .15s, transform .15s, box-shadow .15s;
-    }
-    .rec-wa:hover { background: var(--green-dk); transform: translateY(-2px); box-shadow: 0 6px 22px rgba(37,211,102,.4); }
-    .rec-wa svg { width: 20px; height: 20px; }
-    .rec-info { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-    .rec-row {
-      display: flex; align-items: center; gap: 11px;
-      padding: 13px 18px; border-bottom: 1px solid var(--border);
-      font-size: 13px; color: var(--brown);
-    }
-    .rec-row:last-child { border-bottom: none; }
-    .rec-row .ri { font-size: 18px; width: 26px; text-align: center; flex-shrink: 0; }
-    .rec-row strong { font-weight: 600; color: var(--dark); display: block; font-size: 14px; }
-
-    /* ── Diárias ── */
-    .diaria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .diaria-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 16px 14px;
-      box-shadow: 0 2px 10px rgba(26,22,18,.05);
-      display: flex; flex-direction: column; align-items: center;
-      gap: 6px; text-align: center;
-      transition: box-shadow .2s, transform .2s;
-    }
-    .diaria-card:hover { box-shadow: 0 4px 18px rgba(26,22,18,.10); transform: translateY(-1px); }
-    .diaria-card.highlight { background: var(--gold-bg); border-color: var(--gold-border); }
-    .diaria-icon { font-size: 24px; line-height: 1; }
-    .diaria-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-    .diaria-price { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--gold); letter-spacing: -.5px; }
-    .diaria-note { font-size: 10.5px; color: var(--muted); }
-
-    /* ── Preços ── */
-    .price-block {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(26,22,18,.05); margin-bottom: 14px;
-    }
-    .price-block-head {
-      display: flex; align-items: center; gap: 9px;
-      padding: 12px 16px; background: var(--gold-bg);
-      border-bottom: 1px solid var(--border);
-      font-size: 13px; font-weight: 700; color: var(--brown);
-    }
-    .price-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 16px; border-bottom: 1px solid var(--border);
-      font-size: 13.5px; color: var(--brown);
-    }
-    .price-row:last-child { border-bottom: none; }
-    .price-row .pr-name { flex: 1; }
-    .price-row .pr-val { font-weight: 700; color: var(--dark); font-size: 14px; white-space: nowrap; margin-left: 8px; }
-
-    /* ── Toast ── */
-    .toast {
-      position: fixed; bottom: 20px; left: 50%;
-      transform: translateX(-50%) translateY(60px);
-      background: var(--dark); color: #fff;
-      padding: 10px 20px; border-radius: 30px;
-      font-size: 13px; font-weight: 500;
-      z-index: 9999; pointer-events: none;
-      transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
-      opacity: 0; white-space: nowrap;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-  </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      TELA INICIAL
-══════════════════════════════════════ -->
-<div id="home" class="screen active">
-  <div class="home-header">
-    <div class="home-emblem">🏨</div>
-    <div class="home-title">Isto É Pousada</div>
-    <div class="home-sub">Viana, Maranhão</div>
-    <span class="home-welcome">👋 Bem-vindo ao seu guia do hóspede</span>
+════════════════════════════════════════ -->
+<main id="home" class="screen is-active" data-title="Isto É Pousada — Guia do Hóspede">
+  <header class="masthead">
+    <div class="brand-mark" aria-hidden="true">IÉ</div>
+    <p class="masthead__eyebrow">Guia do Hóspede</p>
+    <h1 class="masthead__title">Isto É <em>Pousada</em></h1>
+    <p class="masthead__place">Viana · Maranhão</p>
+    <p class="masthead__welcome">Seja bem-vindo. Tudo o que você precisa para uma boa estadia, reunido em um só lugar.</p>
+  </header>
+
+  <nav class="folio" aria-label="Informações e serviços">
+    <p class="folio__label eyebrow">Informações &amp; Serviços</p>
+    <ul class="folio__list">
+      <li>
+        <button class="entry" data-go="wifi">
+          <span class="entry__num">01</span>
+          <span class="entry__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><path d="M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </span>
+          <span class="entry__text">
+            <span class="entry__title">Redes &amp; Senhas Wi-Fi</span>
+            <span class="entry__sub">Conecte-se em segundos</span>
+          </span>
+          <span class="entry__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button class="entry" data-go="lanches">
+          <span class="entry__num">02</span>
+          <span class="entry__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v8a2 2 0 0 0 4 0V3M8 3v18"/><path d="M17 3c-1.5 0-2.5 1.8-2.5 4.5S15.5 12 17 12s2.5-1.8 2.5-4.5S18.5 3 17 3zm0 9v9"/></svg>
+          </span>
+          <span class="entry__text">
+            <span class="entry__title">Indicações Gastronômicas</span>
+            <span class="entry__sub">Onde comer em Viana</span>
+          </span>
+          <span class="entry__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button class="entry" data-go="precos">
+          <span class="entry__num">03</span>
+          <span class="entry__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 11a2 2 0 0 1-2 1.8H9A2 2 0 0 1 7 19L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          </span>
+          <span class="entry__text">
+            <span class="entry__title">Produtos &amp; Preços</span>
+            <span class="entry__sub">Bebidas, snacks e higiene</span>
+          </span>
+          <span class="entry__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button class="entry" data-go="regras">
+          <span class="entry__num">04</span>
+          <span class="entry__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+          </span>
+          <span class="entry__text">
+            <span class="entry__title">Regras da Pousada</span>
+            <span class="entry__sub">Políticas e normas de hospedagem</span>
+          </span>
+          <span class="entry__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button class="entry" data-go="recepcao">
+          <span class="entry__num">05</span>
+          <span class="entry__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-1v-6h3M4 11v5a2 2 0 0 0 2 2h1v-6H4"/></svg>
+          </span>
+          <span class="entry__text">
+            <span class="entry__title">Recepção</span>
+            <span class="entry__sub">Fale direto com nossa equipe</span>
+          </span>
+          <span class="entry__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <footer class="colophon">
+    <div class="ornament" aria-hidden="true">◆ ◆ ◆</div>
+    Isto É Pousada · Viana, Maranhão<br />
+    Recepção (98) 98855-5038
+  </footer>
+</main>
+
+
+<!-- ════════════════════════════════════════
+     GASTRONOMIA
+════════════════════════════════════════ -->
+<section id="screen-lanches" class="screen" data-title="Gastronomia — Isto É Pousada">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <button class="back-btn" data-go="home" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="topbar__title"><span class="kicker">Indicações</span><span class="name">Gastronomia</span></span>
+    </div>
+  </header>
+  <div class="detail-body stagger">
+    <div class="note">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+      <span>Indicações em <strong>Viana, MA</strong>. Toque em <strong>Chamar</strong> para abrir o WhatsApp do estabelecimento.</span>
+    </div>
+
+    <h2 class="section-title">🔥 Churrasco &amp; Hamburgueria</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🥩</div>
+        <div class="place__info"><div class="place__name">Homem da Caverna</div><div class="place__phone">(98) 97021-8888</div></div>
+        <a class="wa" href="https://wa.me/5598970218888" target="_blank" rel="noopener" aria-label="Chamar Homem da Caverna no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍔</div>
+        <div class="place__info"><div class="place__name">Mamute</div><div class="place__phone">(98) 99199-6227</div></div>
+        <a class="wa" href="https://wa.me/5598991996227" target="_blank" rel="noopener" aria-label="Chamar Mamute no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍔</div>
+        <div class="place__info"><div class="place__name">Capitão Burguer</div><div class="place__phone">(98) 99970-4547</div></div>
+        <a class="wa" href="https://wa.me/5598999704547" target="_blank" rel="noopener" aria-label="Chamar Capitão Burguer no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍽️</div>
+        <div class="place__info"><div class="place__name">Croco Bistrô</div><div class="place__phone">(98) 97001-2173</div></div>
+        <a class="wa" href="https://wa.me/5598970012173" target="_blank" rel="noopener" aria-label="Chamar Croco Bistrô no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🏡</div>
+        <div class="place__info"><div class="place__name">Villa Country</div><div class="place__phone">(98) 98823-2820</div></div>
+        <a class="wa" href="https://wa.me/5598988232820" target="_blank" rel="noopener" aria-label="Chamar Villa Country no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
+
+    <h2 class="section-title">🥪 Lanchonete</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🥪</div>
+        <div class="place__info"><div class="place__name">Jorge Lanches</div><div class="place__phone">(98) 99115-1911</div></div>
+        <a class="wa" href="https://wa.me/5598991151911" target="_blank" rel="noopener" aria-label="Chamar Jorge Lanches no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
+
+    <h2 class="section-title">🍕 Pizzaria</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍕</div>
+        <div class="place__info"><div class="place__name">Pizzaria Vianense</div><div class="place__phone">(98) 98824-9828</div></div>
+        <a class="wa" href="https://wa.me/5598988249828" target="_blank" rel="noopener" aria-label="Chamar Pizzaria Vianense no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
+
+    <h2 class="section-title">🍧 Açaí &amp; Sorveteria</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🫐</div>
+        <div class="place__info"><div class="place__name">S.O.S Açaí</div><div class="place__phone">(98) 99149-2978</div></div>
+        <a class="wa" href="https://wa.me/5598991492978" target="_blank" rel="noopener" aria-label="Chamar S.O.S Açaí no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍨</div>
+        <div class="place__info"><div class="place__name">Açaiteria Mix</div><div class="place__phone">(98) 99157-5377</div></div>
+        <a class="wa" href="https://wa.me/5598991575377" target="_blank" rel="noopener" aria-label="Chamar Açaiteria Mix no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🍦</div>
+        <div class="place__info"><div class="place__name">Oba Oba</div><div class="place__phone">(98) 98445-9261</div></div>
+        <a class="wa" href="https://wa.me/5598984459261" target="_blank" rel="noopener" aria-label="Chamar Oba Oba no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
+
+    <h2 class="section-title">☕ Cafeteria</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">☕</div>
+        <div class="place__info"><div class="place__name">Damasco</div><div class="place__phone">(98) 98148-7788</div></div>
+        <a class="wa" href="https://wa.me/5598981487788" target="_blank" rel="noopener" aria-label="Chamar Damasco no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
+
+    <h2 class="section-title">🛵 Delivery</h2>
+    <div class="places">
+      <article class="place">
+        <div class="place__avatar" aria-hidden="true">🫓</div>
+        <div class="place__info"><div class="place__name">Beiju Delivery</div><div class="place__phone">(98) 99202-0809</div></div>
+        <a class="wa" href="https://wa.me/5598992020809" target="_blank" rel="noopener" aria-label="Chamar Beiju Delivery no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
+      </article>
+    </div>
   </div>
-
-  <div class="home-body">
-    <div class="home-section-label">Informações &amp; Serviços</div>
-
-    <button class="menu-card" onclick="goTo('wifi')">
-      <div class="mc-icon blue">📶</div>
-      <div class="mc-text">
-        <div class="mc-title">Redes &amp; Senhas Wi-Fi</div>
-        <div class="mc-sub">Redes e senhas da pousada</div>
-      </div>
-      <span class="mc-arrow">›</span>
-    </button>
-
-    <button class="menu-card" onclick="goTo('lanches')">
-      <div class="mc-icon orange">🍔</div>
-      <div class="mc-text">
-        <div class="mc-title">Indicações gastronômicas</div>
-        <div class="mc-sub">Lanches &amp; Restaurantes</div>
-      </div>
-      <span class="mc-arrow">›</span>
-    </button>
-
-    <button class="menu-card" onclick="goTo('precos')">
-      <div class="mc-icon teal">🛒</div>
-      <div class="mc-text">
-        <div class="mc-title">Produtos e Preços</div>
-        <div class="mc-sub">Bebidas, snacks e higiene</div>
-      </div>
-      <span class="mc-arrow">›</span>
-    </button>
-
-    <button class="menu-card" onclick="goTo('regras')">
-      <div class="mc-icon purple">📋</div>
-      <div class="mc-text">
-        <div class="mc-title">Regras da Pousada</div>
-        <div class="mc-sub">Políticas e normas de hospedagem</div>
-      </div>
-      <span class="mc-arrow">›</span>
-    </button>
-
-    <button class="menu-card" onclick="goTo('recepcao')">
-      <div class="mc-icon green">📞</div>
-      <div class="mc-text">
-        <div class="mc-title">Recepção</div>
-        <div class="mc-sub">Fale direto com nossa equipe</div>
-      </div>
-      <span class="mc-arrow">›</span>
-    </button>
-  </div>
-</div>
+</section>
 
 
-<!-- ══════════════════════════════════════
-     LANCHES
-══════════════════════════════════════ -->
-<div id="screen-lanches" class="screen">
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goHome()">‹</button>
-    <span class="detail-topbar-title">🍔 Indicações gastronômicas</span>
-  </div>
-  <div class="detail-body">
-    <div class="info-banner">
-      <span class="ib-icon">📍</span>
-      <span>Indicações gastronômicas em <strong>Viana, MA</strong>. Toque em <strong>Chamar</strong> para abrir o WhatsApp do estabelecimento.</span>
-    </div>
-
-    <div class="sec-title">🔥 Churrasco &amp; Hamburgueria</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">🥩</div>
-        <div class="rest-info"><div class="rest-name">Homem da Caverna</div><div class="rest-phone">(98) 97021-8888</div></div>
-        <a class="wa-btn" href="https://wa.me/5598970218888" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🍔</div>
-        <div class="rest-info"><div class="rest-name">Mamute</div><div class="rest-phone">(98) 99199-6227</div></div>
-        <a class="wa-btn" href="https://wa.me/5598991996227" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🍔</div>
-        <div class="rest-info"><div class="rest-name">Capitão Burguer</div><div class="rest-phone">(98) 99970-4547</div></div>
-        <a class="wa-btn" href="https://wa.me/5598999704547" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🍽️</div>
-        <div class="rest-info"><div class="rest-name">Croco Bistrô</div><div class="rest-phone">(98) 97001-2173</div></div>
-        <a class="wa-btn" href="https://wa.me/5598970012173" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🏡</div>
-        <div class="rest-info"><div class="rest-name">Villa Country</div><div class="rest-phone">(98) 98823-2820</div></div>
-        <a class="wa-btn" href="https://wa.me/5598988232820" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-
-    <div class="sec-title">🥪 Lanchonete</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">🥪</div>
-        <div class="rest-info"><div class="rest-name">Jorge Lanches</div><div class="rest-phone">(98) 99115-1911</div></div>
-        <a class="wa-btn" href="https://wa.me/5598991151911" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-
-    <div class="sec-title">🍕 Pizzaria</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">🍕</div>
-        <div class="rest-info"><div class="rest-name">Pizzaria Vianense</div><div class="rest-phone">(98) 98824-9828</div></div>
-        <a class="wa-btn" href="https://wa.me/5598988249828" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-
-    <div class="sec-title">🍧 Açaí &amp; Sorveteria</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">🫐</div>
-        <div class="rest-info"><div class="rest-name">S.O.S Açaí</div><div class="rest-phone">(98) 99149-2978</div></div>
-        <a class="wa-btn" href="https://wa.me/5598991492978" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🍨</div>
-        <div class="rest-info"><div class="rest-name">Açaiteria Mix</div><div class="rest-phone">(98) 99157-5377</div></div>
-        <a class="wa-btn" href="https://wa.me/5598991575377" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-      <div class="rest-card">
-        <div class="rest-icon">🍦</div>
-        <div class="rest-info"><div class="rest-name">Oba Oba</div><div class="rest-phone">(98) 98445-9261</div></div>
-        <a class="wa-btn" href="https://wa.me/5598984459261" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-
-    <div class="sec-title">☕ Cafeteria</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">☕</div>
-        <div class="rest-info"><div class="rest-name">Damasco</div><div class="rest-phone">(98) 98148-7788</div></div>
-        <a class="wa-btn" href="https://wa.me/5598981487788" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-
-    <div class="sec-title">🛵 Delivery</div>
-    <div class="rest-list">
-      <div class="rest-card">
-        <div class="rest-icon">🫓</div>
-        <div class="rest-info"><div class="rest-name">Beiju Delivery</div><div class="rest-phone">(98) 99202-0809</div></div>
-        <a class="wa-btn" href="https://wa.me/5598992020809" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.525 5.847L0 24l6.335-1.502A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.868 0-3.622-.502-5.133-1.382l-.367-.217-3.763.893.946-3.676-.239-.381A9.946 9.946 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg> Chamar</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      WI-FI
-══════════════════════════════════════ -->
-<div id="screen-wifi" class="screen">
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goHome()">‹</button>
-    <span class="detail-topbar-title">📶 Redes &amp; Senha Wi-Fi</span>
-  </div>
-  <div class="detail-body">
-    <div class="info-banner">
-      <span class="ib-icon">📶</span>
-      <span>O navegador não pode forçar a conexão automática. Toque em <strong>Copiar</strong> para copiar a senha e conecte manualmente se necessário.</span>
+════════════════════════════════════════ -->
+<section id="screen-wifi" class="screen" data-title="Wi-Fi — Isto É Pousada">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <button class="back-btn" data-go="home" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="topbar__title"><span class="kicker">Conectividade</span><span class="name">Redes &amp; Senhas</span></span>
+    </div>
+  </header>
+  <div class="detail-body stagger">
+    <div class="note">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+      <span>O navegador não conecta automaticamente. Toque em <strong>Copiar</strong> e cole a senha nas configurações de Wi-Fi.</span>
     </div>
 
-    <div class="wifi-group">
-      <div class="wifi-head"><span style="font-size:20px">📡</span><h3>Redes Principais</h3></div>
-      <div class="wifi-body">
-        <div class="wifi-lbl">Redes disponíveis</div>
-        <div class="net-tags">
-          <span class="net-tag">📶 Istoepousada01</span>
-          <span class="net-tag">📶 Istoepousada01 5G</span>
-        </div>
-        <div class="pwd-row">
-          <div><div class="pwd-lbl">🔐 Senha</div><div class="pwd-val">pousada2025</div></div>
-          <button class="copy-btn" onclick="copyPwd(this,'pousada2025')">📋 Copiar</button>
-        </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">📡</span> Redes Principais</div>
+      <div class="wifi-label">Redes disponíveis</div>
+      <div class="net-tags">
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> Istoepousada01</span>
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> Istoepousada01 5G</span>
+      </div>
+      <div class="pwd-row">
+        <div><div class="pwd-label">Senha</div><div class="pwd-value">pousada2025</div></div>
+        <button class="copy-btn" data-copy="pousada2025">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copiar
+        </button>
       </div>
     </div>
 
-    <div class="info-banner" style="background:rgba(26,22,18,.04); border-color:var(--border); margin-top:4px;">
-      <span class="ib-icon">📡</span>
-      <span>Rede mais próxima estimada: <strong>Istoepousada01</strong>. Mantenha a senha abaixo caso a conexão automática não funcione.</span>
+    <div class="note note--quiet">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span>
+      <span>Rede mais próxima estimada: <strong>Istoepousada01</strong>. Use a senha acima caso a conexão automática não funcione.</span>
     </div>
 
-    <div class="wifi-group">
-      <div class="wifi-head"><span style="font-size:20px">📡</span><h3>Alas &amp; Apartamentos</h3></div>
-      <div class="wifi-body">
-        <div class="wifi-lbl">Redes disponíveis</div>
-        <div class="net-tags">
-          <span class="net-tag">📶 istoepousada 02</span>
-          <span class="net-tag">📶 Istoepousada 03</span>
-          <span class="net-tag">📶 istoepousada 12</span>
-          <span class="net-tag">📶 istoepousada 13</span>
-          <span class="net-tag">📶 istoepousada 17 e 18</span>
-        </div>
-        <div class="pwd-row">
-          <div><div class="pwd-lbl">🔐 Senha</div><div class="pwd-val">pousada2024</div></div>
-          <button class="copy-btn" onclick="copyPwd(this,'pousada2024')">📋 Copiar</button>
-        </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">📡</span> Alas &amp; Apartamentos</div>
+      <div class="wifi-label">Redes disponíveis</div>
+      <div class="net-tags">
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> istoepousada 02</span>
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> Istoepousada 03</span>
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> istoepousada 12</span>
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> istoepousada 13</span>
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> istoepousada 17 e 18</span>
+      </div>
+      <div class="pwd-row">
+        <div><div class="pwd-label">Senha</div><div class="pwd-value">pousada2024</div></div>
+        <button class="copy-btn" data-copy="pousada2024">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copiar
+        </button>
       </div>
     </div>
 
-    <div class="wifi-group">
-      <div class="wifi-head"><span style="font-size:20px">🍳</span><h3>Cozinha</h3></div>
-      <div class="wifi-body">
-        <div class="wifi-lbl">Rede disponível</div>
-        <div class="net-tags">
-          <span class="net-tag">📶 COZINHA</span>
-        </div>
-        <div class="pwd-row">
-          <div><div class="pwd-lbl">🔐 Senha</div><div class="pwd-val">cozinha2024</div></div>
-          <button class="copy-btn" onclick="copyPwd(this,'cozinha2024')">📋 Copiar</button>
-        </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🍳</span> Cozinha</div>
+      <div class="wifi-label">Rede disponível</div>
+      <div class="net-tags">
+        <span class="net-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/></svg> COZINHA</span>
+      </div>
+      <div class="pwd-row">
+        <div><div class="pwd-label">Senha</div><div class="pwd-value">cozinha2024</div></div>
+        <button class="copy-btn" data-copy="cozinha2024">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg> Copiar
+        </button>
       </div>
     </div>
 
-    <div class="info-banner" style="background:rgba(26,22,18,.04); border-color:var(--border); margin-top:4px;">
-      <span class="ib-icon">💡</span>
-      <span>Em breve você poderá se conectar automaticamente com um toque. Por enquanto, copie a senha e conecte-se manualmente nas configurações.</span>
+    <div class="note note--quiet">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+      <span>Em breve será possível conectar com um toque. Por enquanto, copie a senha e conecte-se manualmente.</span>
     </div>
   </div>
-</div>
+</section>
 
 
-<!-- ══════════════════════════════════════
-     ITENS / PREÇOS
-══════════════════════════════════════ -->
-<div id="screen-precos" class="screen">
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goHome()">‹</button>
-    <span class="detail-topbar-title">🛒 Produtos e Preços</span>
-  </div>
-  <div class="detail-body">
-    <div class="info-banner">
-      <span class="ib-icon">🛒</span>
-      <span><strong>Produtos e Preços 2026</strong> — itens disponíveis na pousada. Solicite na recepção.</span>
+<!-- ════════════════════════════════════════
+     PRODUTOS & PREÇOS
+════════════════════════════════════════ -->
+<section id="screen-precos" class="screen" data-title="Produtos &amp; Preços — Isto É Pousada">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <button class="back-btn" data-go="home" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="topbar__title"><span class="kicker">Conveniência</span><span class="name">Produtos &amp; Preços</span></span>
+    </div>
+  </header>
+  <div class="detail-body stagger">
+    <div class="note">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 11a2 2 0 0 1-2 1.8H9A2 2 0 0 1 7 19L6 8zM9 8V6a3 3 0 0 1 6 0v2"/></svg></span>
+      <span><strong>Tabela 2026</strong> — itens disponíveis na pousada. Solicite na recepção.</span>
     </div>
 
-    <div class="price-block">
-      <div class="price-block-head">🥤 Bebidas</div>
-      <div class="price-row"><span class="pr-name">Água</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">Cerveja Grande</span><span class="pr-val">R$ 16,00</span></div>
-      <div class="price-row"><span class="pr-name">Cerveja Pequena</span><span class="pr-val">R$ 14,00</span></div>
-      <div class="price-row"><span class="pr-name">Suco</span><span class="pr-val">R$ 6,00</span></div>
-      <div class="price-row"><span class="pr-name">Refrigerante</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">H2O</span><span class="pr-val">R$ 8,00</span></div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🥤</span> Bebidas</div>
+      <div class="price-row"><span class="pr-name">Água</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">Cerveja Grande</span><span class="pr-dots"></span><span class="pr-val">R$ 16,00</span></div>
+      <div class="price-row"><span class="pr-name">Cerveja Pequena</span><span class="pr-dots"></span><span class="pr-val">R$ 14,00</span></div>
+      <div class="price-row"><span class="pr-name">Suco</span><span class="pr-dots"></span><span class="pr-val">R$ 6,00</span></div>
+      <div class="price-row"><span class="pr-name">Refrigerante</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">H2O</span><span class="pr-dots"></span><span class="pr-val">R$ 8,00</span></div>
     </div>
 
-    <div class="price-block">
-      <div class="price-block-head">🍿 Snacks e Guloseimas</div>
-      <div class="price-row"><span class="pr-name">Batata</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">Palitos</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">Cookie</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">Trident</span><span class="pr-val">R$ 5,00</span></div>
-      <div class="price-row"><span class="pr-name">Mentos</span><span class="pr-val">R$ 5,00</span></div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🍿</span> Snacks e Guloseimas</div>
+      <div class="price-row"><span class="pr-name">Batata</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">Palitos</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">Cookie</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">Trident</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
+      <div class="price-row"><span class="pr-name">Mentos</span><span class="pr-dots"></span><span class="pr-val">R$ 5,00</span></div>
     </div>
 
-    <div class="price-block">
-      <div class="price-block-head">🪥 Higiene Pessoal</div>
-      <div class="price-row"><span class="pr-name">Kit Barba</span><span class="pr-val">R$ 12,00</span></div>
-      <div class="price-row"><span class="pr-name">Kit Escova</span><span class="pr-val">R$ 12,00</span></div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🪥</span> Higiene Pessoal</div>
+      <div class="price-row"><span class="pr-name">Kit Barba</span><span class="pr-dots"></span><span class="pr-val">R$ 12,00</span></div>
+      <div class="price-row"><span class="pr-name">Kit Escova</span><span class="pr-dots"></span><span class="pr-val">R$ 12,00</span></div>
     </div>
 
-    <div class="info-banner" style="background:rgba(26,22,18,.04); border-color:var(--border); margin-top:4px;">
-      <span class="ib-icon">📞</span>
+    <div class="note note--quiet">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h2l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/></svg></span>
       <span>Para solicitar algum item, fale com a recepção: <strong>(98) 98855-5038</strong></span>
     </div>
   </div>
-</div>
+</section>
 
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      REGRAS
-══════════════════════════════════════ -->
-<div id="screen-regras" class="screen">
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goHome()">‹</button>
-    <span class="detail-topbar-title">📋 Regras da Pousada</span>
-  </div>
-  <div class="detail-body">
-    <div class="info-banner">
-      <span class="ib-icon">📌</span>
-      <span><strong>Regras e Políticas de Hospedagem</strong> — Isto É Pousada. Sua estadia representa o aceite das regras abaixo.</span>
+════════════════════════════════════════ -->
+<section id="screen-regras" class="screen" data-title="Regras — Isto É Pousada">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <button class="back-btn" data-go="home" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="topbar__title"><span class="kicker">Hospedagem</span><span class="name">Regras da Pousada</span></span>
+    </div>
+  </header>
+  <div class="detail-body stagger">
+    <div class="note">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+      <span><strong>Regras e Políticas de Hospedagem.</strong> Sua estadia representa o aceite das regras abaixo.</span>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">📌 Reservas, Cancelamentos e No-Show</div>
-      <div class="rule-body">
-        <div class="rule-item">Check-in: <strong>12h</strong> | Check-out: <strong>12h</strong> — Entradas ou saídas fora do horário estão sujeitas a tarifa adicional.</div>
-        <div class="rule-item">Reserva confirmada mediante <strong>pagamento antecipado de 50%</strong>; saldo restante pago no check-in.</div>
-        <div class="rule-item">Cancelamento com até <strong>7 dias</strong> de antecedência: <strong>reembolso total</strong> (Lei 8.078 – Art. 49 do CDC).</div>
-        <div class="rule-item">Cancelamento entre <strong>2 e 6 dias</strong>: <strong>reembolso de 50%</strong>.</div>
-        <div class="rule-item">Cancelamento com menos de <strong>24h</strong>, no-show ou desistência presencial: <strong>sem reembolso</strong>.</div>
-        <div class="rule-item">Alterações de datas estão sujeitas à disponibilidade e variação de tarifa.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">📌</span> Reservas, Cancelamentos e No-Show</div>
+      <ul class="rule">
+        <li>Check-in: <strong>12h</strong> | Check-out: <strong>12h</strong> — entradas ou saídas fora do horário estão sujeitas a tarifa adicional.</li>
+        <li>Reserva confirmada mediante <strong>pagamento antecipado de 50%</strong>; saldo restante pago no check-in.</li>
+        <li>Cancelamento com até <strong>7 dias</strong> de antecedência: <strong>reembolso total</strong> (Lei 8.078 – Art. 49 do CDC).</li>
+        <li>Cancelamento entre <strong>2 e 6 dias</strong>: <strong>reembolso de 50%</strong>.</li>
+        <li>Cancelamento com menos de <strong>24h</strong>, no-show ou desistência presencial: <strong>sem reembolso</strong>.</li>
+        <li>Alterações de datas estão sujeitas à disponibilidade e variação de tarifa.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">👧 Política de Crianças</div>
-      <div class="rule-body">
-        <div class="rule-item">Até <strong>4 anos</strong>: cortesia, no mesmo quarto dos responsáveis.</div>
-        <div class="rule-item">De <strong>5 a 11 anos</strong>: valor como hóspede extra.</div>
-        <div class="rule-item">A partir de <strong>12 anos</strong>: valor integral da diária.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">👧</span> Política de Crianças</div>
+      <ul class="rule">
+        <li>Até <strong>4 anos</strong>: cortesia, no mesmo quarto dos responsáveis.</li>
+        <li>De <strong>5 a 11 anos</strong>: valor como hóspede extra.</li>
+        <li>A partir de <strong>12 anos</strong>: valor integral da diária.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">🐾 Política de Pets</div>
-      <div class="rule-body">
-        <div class="rule-item">A presença de animais deve ser <strong>consultada no ato da reserva</strong>.</div>
-        <div class="rule-item">Danos causados pelo animal são de responsabilidade do tutor. <strong>Multa: R$ 150,00</strong>.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🐾</span> Política de Pets</div>
+      <ul class="rule">
+        <li>A presença de animais deve ser <strong>consultada no ato da reserva</strong>.</li>
+        <li>Danos causados pelo animal são de responsabilidade do tutor. <strong>Multa: R$ 150,00</strong>.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">🚫 Visitas</div>
-      <div class="rule-body">
-        <div class="rule-item">Visitantes <strong>não são permitidos nos apartamentos</strong> — aguardar na recepção.</div>
-        <div class="rule-item">Acesso de terceiros aos quartos sem autorização será cobrado como hóspede extra.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🚫</span> Visitas</div>
+      <ul class="rule">
+        <li>Visitantes <strong>não são permitidos nos apartamentos</strong> — aguardar na recepção.</li>
+        <li>Acesso de terceiros aos quartos sem autorização será cobrado como hóspede extra.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">☕ Café da Manhã</div>
-      <div class="rule-body">
-        <div class="rule-item"><strong>Segunda a sexta-feira:</strong> 06h30 às 09h00</div>
-        <div class="rule-item"><strong>Sábados e domingos:</strong> 06h30 às 10h00</div>
-        <div class="rule-item">Café para visitantes: valor adicional (consulte na recepção).</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">☕</span> Café da Manhã</div>
+      <ul class="rule">
+        <li><strong>Segunda a sexta-feira:</strong> 06h30 às 09h00.</li>
+        <li><strong>Sábados e domingos:</strong> 06h30 às 10h00.</li>
+        <li>Café para visitantes: valor adicional (consulte na recepção).</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">⚡ Voltagem</div>
-      <div class="rule-body">
-        <div class="rule-item">Toda a pousada opera com voltagem <strong>220V</strong>.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">⚡</span> Voltagem</div>
+      <ul class="rule">
+        <li>Toda a pousada opera com voltagem <strong>220V</strong>.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">🚭 Proibido Fumar</div>
-      <div class="rule-body">
-        <div class="rule-item">Proibido fumar em ambientes internos, incluindo apartamentos (Lei Federal nº 12.546/2011). <strong>Multa: R$ 300,00</strong>.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🚭</span> Proibido Fumar</div>
+      <ul class="rule">
+        <li>Proibido fumar em ambientes internos, incluindo apartamentos (Lei Federal nº 12.546/2011). <strong>Multa: R$ 300,00</strong>.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">🔇 Silêncio e Boa Convivência</div>
-      <div class="rule-body">
-        <div class="rule-item">Horário de silêncio: <strong>21h às 7h</strong> — sem barulhos ou música alta (Art. 42 – Decreto-Lei nº 3.688/1941).</div>
-        <div class="rule-item">Proibido circular nas áreas externas sem camisa, toalhas ou trajes íntimos.</div>
-        <div class="rule-item">Proibido descarte de lixo em locais inadequados. Utilize as lixeiras disponíveis.</div>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🔇</span> Silêncio e Boa Convivência</div>
+      <ul class="rule">
+        <li>Horário de silêncio: <strong>21h às 7h</strong> — sem barulhos ou música alta (Art. 42 – Decreto-Lei nº 3.688/1941).</li>
+        <li>Proibido circular nas áreas externas sem camisa, toalhas ou trajes íntimos.</li>
+        <li>Proibido descarte de lixo em locais inadequados. Utilize as lixeiras disponíveis.</li>
+      </ul>
     </div>
 
-    <div class="rule-block">
-      <div class="rule-head">🧾 Responsabilidade do Hóspede</div>
-      <div class="rule-body">
-        <div class="rule-item">A pousada <strong>não se responsabiliza</strong> por valores, documentos ou objetos deixados nos quartos ou áreas comuns.</div>
-        <div class="rule-item">Antes do check-out será realizada conferência de todos os itens e condições do apartamento.</div>
-        <div class="rule-item">Danos ao mobiliário, enxoval e equipamentos serão cobrados conforme a tabela:</div>
-      </div>
-      <div style="padding: 0 16px 14px;">
-        <table class="fine-tbl">
-          <tr><td>Colcha / Lençol</td><td>R$ 120,00</td></tr>
-          <tr><td>Fronha</td><td>R$ 50,00</td></tr>
-          <tr><td>Toalha</td><td>R$ 80,00</td></tr>
-          <tr><td>Travesseiro</td><td>R$ 60,00</td></tr>
-          <tr><td>Lixeira</td><td>R$ 50,00</td></tr>
-          <tr><td>Taça</td><td>R$ 25,00</td></tr>
-          <tr><td>Lustre</td><td>R$ 200,00</td></tr>
-          <tr><td>Espelho grande</td><td>R$ 400,00</td></tr>
-          <tr><td>Espelho pequeno</td><td>R$ 200,00</td></tr>
-          <tr><td>Móveis</td><td>R$ 200,00</td></tr>
-          <tr><td>Controle de TV</td><td>R$ 50,00</td></tr>
-          <tr><td>Controle de ar-condicionado</td><td>R$ 150,00</td></tr>
-          <tr><td>Chave do apartamento</td><td>R$ 50,00</td></tr>
-        </table>
-      </div>
+    <div class="card">
+      <div class="card__head"><span class="emoji" aria-hidden="true">🧾</span> Responsabilidade do Hóspede</div>
+      <ul class="rule">
+        <li>A pousada <strong>não se responsabiliza</strong> por valores, documentos ou objetos deixados nos quartos ou áreas comuns.</li>
+        <li>Antes do check-out será realizada conferência de todos os itens e condições do apartamento.</li>
+        <li>Danos ao mobiliário, enxoval e equipamentos serão cobrados conforme a tabela:</li>
+      </ul>
+      <table class="fines">
+        <tr><td>Colcha / Lençol</td><td>R$ 120,00</td></tr>
+        <tr><td>Fronha</td><td>R$ 50,00</td></tr>
+        <tr><td>Toalha</td><td>R$ 80,00</td></tr>
+        <tr><td>Travesseiro</td><td>R$ 60,00</td></tr>
+        <tr><td>Lixeira</td><td>R$ 50,00</td></tr>
+        <tr><td>Taça</td><td>R$ 25,00</td></tr>
+        <tr><td>Lustre</td><td>R$ 200,00</td></tr>
+        <tr><td>Espelho grande</td><td>R$ 400,00</td></tr>
+        <tr><td>Espelho pequeno</td><td>R$ 200,00</td></tr>
+        <tr><td>Móveis</td><td>R$ 200,00</td></tr>
+        <tr><td>Controle de TV</td><td>R$ 50,00</td></tr>
+        <tr><td>Controle de ar-condicionado</td><td>R$ 150,00</td></tr>
+        <tr><td>Chave do apartamento</td><td>R$ 50,00</td></tr>
+      </table>
     </div>
 
-    <div class="info-banner" style="margin-top:4px;">
-      <span class="ib-icon">📞</span>
+    <div class="note note--quiet">
+      <span class="note__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h2l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/></svg></span>
       <span>Dúvidas? Entre em contato: <strong>(98) 98855-5038</strong></span>
     </div>
   </div>
-</div>
+</section>
 
 
-<!-- ══════════════════════════════════════
+<!-- ════════════════════════════════════════
      RECEPÇÃO
-══════════════════════════════════════ -->
-<div id="screen-recepcao" class="screen">
-  <div class="detail-topbar">
-    <button class="back-btn" onclick="goHome()">‹</button>
-    <span class="detail-topbar-title">📞 Recepção</span>
-  </div>
-  <div class="detail-body">
+════════════════════════════════════════ -->
+<section id="screen-recepcao" class="screen" data-title="Recepção — Isto É Pousada">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <button class="back-btn" data-go="home" aria-label="Voltar ao início">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </button>
+      <span class="topbar__title"><span class="kicker">Atendimento</span><span class="name">Recepção</span></span>
+    </div>
+  </header>
+  <div class="detail-body stagger">
     <div class="rec-hero">
-      <div class="rec-emblem">🏨</div>
+      <div class="brand-mark" aria-hidden="true">IÉ</div>
       <h2>Isto É Pousada</h2>
       <p>Nossa recepção está pronta para te atender. Chame a gente pelo WhatsApp!</p>
       <a class="rec-wa" href="https://wa.me/5598988555038" target="_blank" rel="noopener">
@@ -792,29 +493,29 @@
         Falar com a Recepção
       </a>
     </div>
-    <div class="rec-info">
+    <div class="card">
       <div class="rec-row">
-        <span class="ri">📞</span>
-        <div><strong>(98) 98855-5038</strong>WhatsApp da Recepção</div>
+        <span class="rec-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h2l1.5 4-2 1.5a12 12 0 0 0 6 6l1.5-2 4 1.5v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/></svg></span>
+        <div><strong>(98) 98855-5038</strong><span>WhatsApp da Recepção</span></div>
       </div>
       <div class="rec-row">
-        <span class="ri">🕐</span>
-        <div><strong>Check-in: 12h | Check-out: 12h</strong>Horários padrão de entrada e saída</div>
+        <span class="rec-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <div><strong>Check-in 12h · Check-out 12h</strong><span>Horários padrão de entrada e saída</span></div>
       </div>
       <div class="rec-row">
-        <span class="ri">☕</span>
-        <div><strong>Café da Manhã</strong>Seg–Sex: 06h30–09h00 · Sáb–Dom: 06h30–10h00</div>
+        <span class="rec-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h11v3a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-3zM16 12h2a2 2 0 0 1 0 4h-2M8 4v2M11 3v3"/></svg></span>
+        <div><strong>Café da Manhã</strong><span>Seg–Sex: 06h30–09h00 · Sáb–Dom: 06h30–10h00</span></div>
       </div>
       <div class="rec-row">
-        <span class="ri">📍</span>
-        <div><strong>Viana, Maranhão</strong>Isto É Pousada</div>
+        <span class="rec-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <div><strong>Viana, Maranhão</strong><span>Isto É Pousada</span></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 </body>
 </html>
